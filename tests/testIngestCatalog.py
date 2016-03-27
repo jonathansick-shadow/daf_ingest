@@ -106,7 +106,7 @@ class IngestCatalogTest(unittest.TestCase):
              np.array(range(1), dtype=np.int32),
              np.array(range(3), dtype=np.float32),
              np.array(range(4), dtype=np.float64),
-            ),
+             ),
             (65535, 2147483647, 9223372036854775807, 2.0, math.e,
              True, Angle(2.0), "",
              np.array(range(2), dtype=np.uint16),
@@ -117,7 +117,7 @@ class IngestCatalogTest(unittest.TestCase):
              np.array([], dtype=np.int32),
              np.array([], dtype=np.float32),
              np.array([], dtype=np.float64),
-            )
+             )
         )
         # and a corresponding catalog
         self.catalog = afwTable.BaseCatalog(schema)
@@ -239,6 +239,7 @@ def suite():
     suites += unittest.makeSuite(IngestCatalogTest)
     suites += unittest.makeSuite(utilsTests.MemoryTestCase)
     return unittest.TestSuite(suites)
+
 
 def run(shouldExit=False):
     """Run the tests"""

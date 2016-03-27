@@ -32,12 +32,13 @@ from lsst.daf.persistence import DbAuth
 import lsst.pex.config as pexConfig
 import lsst.pipe.base as pipeBase
 
-## \addtogroup LSST_task_documentation
-## \{
-## \page daf_ingest_IngestCatalogTask
-## \ref IngestCatalogTask_ "IngestCatalogTask"
-##      \copybrief IngestCatalogTask
-## \}
+# \addtogroup LSST_task_documentation
+# \{
+# \page daf_ingest_IngestCatalogTask
+# \ref IngestCatalogTask_ "IngestCatalogTask"
+# \copybrief IngestCatalogTask
+# \}
+
 
 class FieldFormatter(object):
     """A class for formatting fields in an afw BaseCatalog.
@@ -77,11 +78,13 @@ def _formatNumber(formatString, number):
         return "NULL"
     return formatString.format(number)
 
+
 def _formatString(string):
     """Helper function for formatting a string. Embedded backslashes and single
     quotes are backslash-escaped.
     """
     return "'" + string.replace("\\", "\\\\").replace("'", "\\'") + "'"
+
 
 def _formatArray(formatChar, array):
     """Auxiliary function for formatting an array. The array elements are packed
@@ -91,6 +94,7 @@ def _formatArray(formatChar, array):
     """
     bytestring = struct.pack("<" + str(len(array)) + formatChar, *array)
     return "x'" + bytestring.encode('hex_codec') + "'"
+
 
 def _sqlTypeForString(field):
     """Helper function for computing the SQL column type of a string valued field.
@@ -105,6 +109,7 @@ def _sqlTypeForString(field):
     # column and back. Therefore, use VARCHAR. Also, assume strings are
     # ASCII for now.
     return "VARCHAR({}) CHARACTER SET ascii COLLATE ascii_bin NOT NULL".format(sz)
+
 
 def _sqlTypeForArray(formatChar, field):
     """Helper function for computing the SQL column type of an array valued field.
@@ -149,11 +154,13 @@ def canonicalizeFieldName(fieldName):
     """
     return re.sub(r"[^\w]", "_", fieldName)
 
+
 def quoteIdentifier(identifier):
     """Return a MySQL compatible version of the given identifier by quoting
     it with back-ticks (and escaping embedded back-ticks).
     """
     return "`" + identifier.replace("`", "``") + "`"
+
 
 def aliasesFor(name, mappings):
     """Compute and return the set of possible aliases for the given field name.
@@ -185,7 +192,7 @@ def aliasesFor(name, mappings):
                     valid = True
                     for s, _ in mappings[i + 1:]:
                         if not s.startswith(source):
-                            break;
+                            break
                         if alias.startswith(s):
                             valid = False
                             break
@@ -236,6 +243,7 @@ class IngestCatalogConfig(pexConfig.Config):
 
 
 class IngestCatalogRunner(pipeBase.TaskRunner):
+
     @staticmethod
     def getTargetList(parsedCmd):
         """Override the target list to add additional run() method parameters.
